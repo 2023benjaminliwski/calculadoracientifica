@@ -14,55 +14,58 @@
       <div id="display" class="display">0</div>
     </div>
 
-    <!-- Panel de Botones -->
-    <div class="keypad">
-      <!-- Fila 1: Modos y Limpieza -->
+    <!-- Fila superior de controles principales -->
+    <div class="top-row">
       <button class="btn btn-mode" id="angle-mode">DEG</button>
       <button class="btn btn-action" id="mc">MC</button>
       <button class="btn btn-action" id="mr">MR</button>
       <button class="btn btn-action" id="m-plus">M+</button>
-      <button class="btn btn-clear" id="clear">C</button>
       <button class="btn btn-clear" id="backspace">⌫</button>
+      <button class="btn btn-clear" id="clear">C</button>
+    </div>
 
-      <!-- Fila 2: Funciones científicas 1 -->
-      <button class="btn btn-func" data-func="sin">sin</button>
-      <button class="btn btn-func" data-func="cos">cos</button>
-      <button class="btn btn-func" data-func="tan">tan</button>
-      <button class="btn btn-func" data-func="log">log</button>
-      <button class="btn btn-func" data-func="ln">ln</button>
-      <button class="btn btn-operator" data-op="/">÷</button>
+    <!-- Cuerpo principal dividido en 2 columnas: Científica y Estándar -->
+    <div class="main-body">
+      <!-- Columna Izquierda: Funciones Científicas -->
+      <div class="scientific-panel">
+        <button class="btn btn-func" data-func="sin">sin</button>
+        <button class="btn btn-func" data-func="cos">cos</button>
+        <button class="btn btn-func" data-func="tan">tan</button>
+        <button class="btn btn-func" data-func="log">log</button>
+        <button class="btn btn-func" data-func="ln">ln</button>
+        <button class="btn btn-func" data-func="sqrt">√</button>
+        <button class="btn btn-func" data-func="pow">x²</button>
+        <button class="btn btn-func" data-func="power">x^y</button>
+        <button class="btn btn-func" data-func="pi">π</button>
+        <button class="btn btn-func" data-func="e">e</button>
+        <button class="btn btn-func" data-func="fact">n!</button>
+        <button class="btn btn-func">(</button>
+        <button class="btn btn-func">)</button>
+        <button class="btn btn-func" id="toggle-sign">±</button>
+      </div>
 
-      <!-- Fila 3: Funciones científicas 2 y Números -->
-      <button class="btn btn-func" data-func="sqrt">√</button>
-      <button class="btn btn-func" data-func="pow">x²</button>
-      <button class="btn btn-func" data-func="power">x^y</button>
-      <button class="btn btn-num">7</button>
-      <button class="btn btn-num">8</button>
-      <button class="btn btn-num">9</button>
+      <!-- Columna Derecha: Teclado Numérico y Operadores Básicos -->
+      <div class="numeric-panel">
+        <button class="btn btn-num">7</button>
+        <button class="btn btn-num">8</button>
+        <button class="btn btn-num">9</button>
+        <button class="btn btn-operator" data-op="/">÷</button>
 
-      <!-- Fila 4: Constantes y Números -->
-      <button class="btn btn-func" data-func="pi">π</button>
-      <button class="btn btn-func" data-func="e">e</button>
-      <button class="btn btn-func" data-func="fact">n!</button>
-      <button class="btn btn-num">4</button>
-      <button class="btn btn-num">5</button>
-      <button class="btn btn-num">6</button>
+        <button class="btn btn-num">4</button>
+        <button class="btn btn-num">5</button>
+        <button class="btn btn-num">6</button>
+        <button class="btn btn-operator" data-op="*">×</button>
 
-      <!-- Fila 5: Paréntesis y Operadores principales -->
-      <button class="btn btn-func">(</button>
-      <button class="btn btn-func">)</button>
-      <button class="btn btn-operator" data-op="*">×</button>
-      <button class="btn btn-num">1</button>
-      <button class="btn btn-num">2</button>
-      <button class="btn btn-num">3</button>
+        <button class="btn btn-num">1</button>
+        <button class="btn btn-num">2</button>
+        <button class="btn btn-num">3</button>
+        <button class="btn btn-operator" data-op="-">-</button>
 
-      <!-- Fila 6: Signo, Cero, Punto, Resta, Suma e Igual -->
-      <button class="btn btn-func" id="toggle-sign">±</button>
-      <button class="btn btn-num">0</button>
-      <button class="btn btn-num">.</button>
-      <button class="btn btn-operator" data-op="-">-</button>
-      <button class="btn btn-operator" data-op="+">+</button>
-      <button class="btn btn-equal" id="equals">=</button>
+        <button class="btn btn-num">0</button>
+        <button class="btn btn-num">.</button>
+        <button class="btn btn-equal" id="equals">=</button>
+        <button class="btn btn-operator" data-op="+">+</button>
+      </div>
     </div>
   </div>
 
