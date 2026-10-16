@@ -1,185 +1,176 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const display = document.getElementById('display');
-  const history = document.getElementById('history');
-  const angleBtn = document.getElementById('angle-mode');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-  let currentExpression = '';
-  let isDegree = true; // Modo por defecto DEG (Grados)
-  let memory = 0;
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
 
-  // Actualizar pantalla
-  function updateDisplay() {
-    display.textContent = currentExpression || '0';
+.calculator {
+  background: #141c26;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 520px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Pantalla */
+.display-container {
+  background: #0d131a;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  text-align: right;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.history {
+  color: #7a8b9e;
+  font-size: 0.9rem;
+  min-height: 1.2rem;
+}
+
+.display {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+/* Botonera Superior */
+.top-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* Cuerpo Principal Organizado */
+.main-body {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 12px;
+}
+
+/* Panel Científico (2 Columnas) */
+.scientific-panel {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* Panel Numérico (4 Columnas) */
+.numeric-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* Estilos de Botones */
+.btn {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 2px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  background: #334155;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn-num {
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.btn-num:hover {
+  background: #1e293b;
+}
+
+.btn-operator {
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.btn-operator:hover {
+  background: #2563eb;
+}
+
+.btn-clear {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btn-clear:hover {
+  background: #dc2626;
+}
+
+.btn-equal {
+  background: #10b981;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.btn-equal:hover {
+  background: #059669;
+}
+
+.btn-mode {
+  background: #8b5cf6;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.btn-action {
+  background: #283548;
+  color: #94a3b8;
+  font-size: 0.8rem;
+}
+
+/* Ajustes Responsivos */
+@media (max-width: 480px) {
+  .main-body {
+    grid-template-columns: 1fr;
   }
-
-  // Escuchar clics en los botones
-  document.querySelector('.keypad').addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-
-    const num = btn.classList.contains('btn-num') ? btn.textContent : null;
-    const func = btn.dataset.func;
-    const op = btn.dataset.op;
-
-    // Números y punto decimal
-    if (num !== null) {
-      currentExpression += num;
-      updateDisplay();
-      return;
-    }
-
-    // Operadores básicos
-    if (op) {
-      currentExpression += ` ${op} `;
-      updateDisplay();
-      return;
-    }
-
-    // Funciones científicas
-    if (func) {
-      handleScientificFunc(func);
-      return;
-    }
-
-    // Acciones especiales por ID
-    switch (btn.id) {
-      case 'clear':
-        currentExpression = '';
-        history.textContent = '';
-        updateDisplay();
-        break;
-
-      case 'backspace':
-        currentExpression = currentExpression.trimEnd();
-        currentExpression = currentExpression.slice(0, -1);
-        updateDisplay();
-        break;
-
-      case 'equals':
-        calculateResult();
-        break;
-
-      case 'angle-mode':
-        isDegree = !isDegree;
-        angleBtn.textContent = isDegree ? 'DEG' : 'RAD';
-        break;
-
-      case 'toggle-sign':
-        if (currentExpression) {
-          if (currentExpression.startsWith('-')) {
-            currentExpression = currentExpression.substring(1);
-          } else {
-            currentExpression = '-' + currentExpression;
-          }
-          updateDisplay();
-        }
-        break;
-
-      // Memoria
-      case 'mc':
-        memory = 0;
-        break;
-      case 'mr':
-        currentExpression += memory.toString();
-        updateDisplay();
-        break;
-      case 'm-plus':
-        try {
-          memory += parseFloat(eval(parseExpression(currentExpression)));
-        } catch { }
-        break;
-    }
-  });
-
-  // Manejo de funciones científicas
-  function handleScientificFunc(func) {
-    switch (func) {
-      case 'sin':
-      case 'cos':
-      case 'tan':
-      case 'log':
-      case 'ln':
-      case 'sqrt':
-        currentExpression += `${func}(`;
-        break;
-      case 'pow':
-        currentExpression += '^2';
-        break;
-      case 'power':
-        currentExpression += '^';
-        break;
-      case 'pi':
-        currentExpression += 'π';
-        break;
-      case 'e':
-        currentExpression += 'e';
-        break;
-      case 'fact':
-        currentExpression += '!';
-        break;
-    }
-    updateDisplay();
+  .scientific-panel {
+    grid-template-columns: repeat(4, 1fr);
   }
-
-  // Reemplazar sintaxis para evaluarla en JavaScript
-  function parseExpression(expr) {
-    let parsed = expr;
-
-    // Constantes
-    parsed = parsed.replace(/π/g, 'Math.PI');
-    parsed = parsed.replace(/\be\b/g, 'Math.E');
-
-    // Potencias y Raíces
-    parsed = parsed.replace(/\^2/g, '**2');
-    parsed = parsed.replace(/\^/g, '**');
-
-    // Factorial (evaluación básica para números sencillos)
-    parsed = parsed.replace(/(\d+)!/g, (_, n) => factorial(parseInt(n)));
-
-    // Logaritmos
-    parsed = parsed.replace(/log\(/g, 'Math.log10(');
-    parsed = parsed.replace(/ln\(/g, 'Math.log(');
-    parsed = parsed.replace(/sqrt\(/g, 'Math.sqrt(');
-
-    // Funciones Trigonométricas (considerando DEG / RAD)
-    const angleConv = isDegree ? '*(Math.PI/180)' : '';
-    parsed = parsed.replace(/sin\(([^)]+)\)/g, `Math.sin(($1)${angleConv})`);
-    parsed = parsed.replace(/cos\(([^)]+)\)/g, `Math.cos(($1)${angleConv})`);
-    parsed = parsed.replace(/tan\(([^)]+)\)/g, `Math.tan(($1)${angleConv})`);
-
-    return parsed;
+  .calculator {
+    padding: 15px;
   }
-
-  // Función Factorial auxiliar
-  function factorial(n) {
-    if (n < 0) return NaN;
-    if (n === 0 || n === 1) return 1;
-    let res = 1;
-    for (let i = 2; i <= n; i++) res *= i;
-    return res;
+  .btn {
+    padding: 12px 2px;
+    font-size: 0.85rem;
   }
-
-  // Calcular el resultado final
-  function calculateResult() {
-    if (!currentExpression) return;
-
-    try {
-      history.textContent = currentExpression + ' =';
-      const parsed = parseExpression(currentExpression);
-      
-      // Evaluamos la expresión
-      let result = eval(parsed);
-
-      // Formatear decimales largos
-      if (typeof result === 'number' && !Number.isInteger(result)) {
-        result = parseFloat(result.toFixed(8));
-      }
-
-      currentExpression = result.toString();
-      updateDisplay();
-    } catch (err) {
-      display.textContent = 'Error';
-      currentExpression = '';
-    }
-  }
-});
+}
