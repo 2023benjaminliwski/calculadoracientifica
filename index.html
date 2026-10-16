@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Científica</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fuente de íconos y texto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="calculator-container">
+    <!-- Encabezado / Modo de ángulo -->
+    <div class="calc-header">
+      <span class="logo">CASIO-Style FX</span>
+      <div class="angle-toggle">
+        <button id="btn-deg-rad" class="active-mode">DEG</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de la calculadora -->
+    <div class="display-screen">
+      <div id="history-display" class="history-line"></div>
+      <div id="main-display" class="main-line">0</div>
+    </div>
+
+    <!-- Teclado de funciones y números -->
+    <div class="keypad">
+      <!-- Fila de funciones especiales / memoria -->
+      <button class="btn btn-func" onclick="handleMemory('MC')">MC</button>
+      <button class="btn btn-func" onclick="handleMemory('MR')">MR</button>
+      <button class="btn btn-func" onclick="handleMemory('M+')">M+</button>
+      <button class="btn btn-func" onclick="handleMemory('M-')">M-</button>
+      <button class="btn btn-clear" onclick="clearAll()">AC</button>
+      <button class="btn btn-clear" onclick="deleteLast()">DEL</button>
+
+      <!-- Funciones científicas (Fila 1) -->
+      <button class="btn btn-scientific" onclick="appendFunction('sin')">sin</button>
+      <button class="btn btn-scientific" onclick="appendFunction('cos')">cos</button>
+      <button class="btn btn-scientific" onclick="appendFunction('tan')">tan</button>
+      <button class="btn btn-scientific" onclick="appendFunction('log')">log</button>
+      <button class="btn btn-scientific" onclick="appendFunction('ln')">ln</button>
+      <button class="btn btn-operator" onclick="appendOperator('/')">÷</button>
+
+      <!-- Funciones científicas (Fila 2) -->
+      <button class="btn btn-scientific" onclick="appendFunction('asin')">sin⁻¹</button>
+      <button class="btn btn-scientific" onclick="appendFunction('acos')">cos⁻¹</button>
+      <button class="btn btn-scientific" onclick="
